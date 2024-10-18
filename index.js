@@ -14,14 +14,15 @@ app.use(cors(corsOptions));
 
 // Route pour authentification avec l'API Orange
 app.post('/api/oauth/token', (req, res) => {
-    console.log(req.body.token);
-
+   
     const url = 'https://api.orange.com/oauth/v3/token';
     fetch(url, {
         method: 'POST',
         headers: {
-            'Authorization': `Basic ${req.body.token}`,
-            'Content-Type': 'application/json'
+            'Authorization' : 'Basic Y0Nka1R6dm5rY3NmeEJ0QXVuWVJ0d0hTOFlKTThXYWw6WXRLOHNuazJIU1g1NVV1Zg==',
+            'Content-Type' : 'application/x-www-form-urlencoded',
+            'Accept' : 'application/json',
+            'Accept' : '*/*'
         }
     })
     .then(response => response.json())
@@ -36,7 +37,6 @@ app.post('/api/oauth/token', (req, res) => {
 // Route pour envoyer des SMS via l'API Orange
 app.post('/sms', (req, res) => {
     const url = 'https://api.orange.com/smsmessaging/v1/outbound/tel:+243899429957/requests';
-
 
     fetch(url, {
         method: 'POST',
