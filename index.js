@@ -26,7 +26,6 @@ app.post('/api/oauth/token', (req, res) => {
         headers: {
             'Authorization': 'Basic Y0Nka1R6dm5rY3NmeEJ0QXVuWVJ0d0hTOFlKTThXYWw6WXRLOHNuazJIU1g1NVV1Zg==',
             'Content-Type': 'application/x-www-form-urlencoded',
-            'Accept' : 'application/json',
             'Accept': '*/*'
         }
     })
@@ -40,21 +39,24 @@ app.post('/api/oauth/token', (req, res) => {
 });
 
 // Route pour envoyer des SMS via l'API Orange
-app.post('/sms', (req, res) => {
+app.post('/sms/:telephone/:message/:token', (req, res) => {
     const url = 'https://api.orange.com/smsmessaging/v1/outbound/tel:+243899429957/requests';
+
+    console.log(req.params.telephone);
 
     fetch(url, {
         method: 'POST',
         headers: {
-            'Authorization': `Bearer ${req.body.token}`,
-            'Content-Type': 'application/json'
+            'Authorization': `Bearer ${req.params.token}`,
+            'Content-Type': 'application/json',
+            'Accept': '*/*'
         },
         body: JSON.stringify({
             "outboundSMSMessageRequest": {
-                "address": `tel:${req.body.telephone}`,
-                "senderAddress": `tel:+243899429957`,
+                "address": `tel:+${req.params.telephone}`,
+                "senderAddress": 'tel:+243899429957',
                 "outboundSMSTextMessage": {
-                    "message": req.body.message
+                    "message": `${req.params.message}`
                 }
             }
         })
