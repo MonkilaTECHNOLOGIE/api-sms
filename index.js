@@ -4,13 +4,18 @@ const express = require('express');
 const cors = require("cors");
 const fetch = require('node-fetch');
 const app = express();
-app.use(express.json());
+const bodyParser = require('body-parser');
+
 
 var corsOptions = {
     origin: "*"
 };
 
+
+app.use(bodyParser.json());
+app.use(express.json());
 app.use(cors(corsOptions));
+
 
 // Route pour authentification avec l'API Orange
 app.post('/api/oauth/token', (req, res) => {
@@ -39,24 +44,29 @@ app.post('/api/oauth/token', (req, res) => {
 });
 
 // Route pour envoyer des SMS via l'API Orange
-app.post('/sms/:telephone/:message/:token', (req, res) => {
+app.post('/sms', (req, res) => {
     const url = 'https://api.orange.com/smsmessaging/v1/outbound/tel:+243899429957/requests';
 
-    console.log(req.params.telephone);
+    console.log(req.body.telephone);
+
+    let telephone = req.body.telephone;
+    let message = req.body.message;
+    let token = req.body.token;
+
 
     fetch(url, {
         method: 'POST',
         headers: {
-            'Authorization': `Bearer ${req.params.token}`,
+            'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
             'Accept': '*/*'
         },
         body: JSON.stringify({
             "outboundSMSMessageRequest": {
-                "address": `tel:+${req.params.telephone}`,
+                "address": `tel:+${telephone}`,
                 "senderAddress": 'tel:+243899429957',
                 "outboundSMSTextMessage": {
-                    "message": `${req.params.message}`
+                    "message": `${message}`
                 }
             }
         })
