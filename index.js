@@ -47,13 +47,15 @@ app.post('/api/oauth/token', (req, res) => {
 
 // Route pour envoyer des SMS via l'API Orange
 app.post('/sms', (req, res) => {
-    const url = 'https://api.orange.com/smsmessaging/v1/outbound/tel:+243899429957/requests';
-
-    console.log(req.body.telephone);
 
     let telephone = req.body.telephone;
     let message = req.body.message;
     let token = req.body.token;
+    let sender =  req.body.sender;
+
+    const url = `https://api.orange.com/smsmessaging/v1/outbound/tel:${sender}/requests`;
+
+   
 
 
     fetch(url, {
@@ -66,7 +68,7 @@ app.post('/sms', (req, res) => {
         body: JSON.stringify({
             "outboundSMSMessageRequest": {
                 "address": `tel:+${telephone}`,
-                "senderAddress": 'tel:+243899429957',
+                "senderAddress": `tel:${sender}`,
                 "outboundSMSTextMessage": {
                     "message": `${message}`
                 }
