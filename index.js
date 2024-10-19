@@ -25,11 +25,13 @@ app.post('/api/oauth/token', (req, res) => {
     const data = new URLSearchParams();
     data.append('grant_type', 'client_credentials');
 
+    let token = req.body.token;
+
     fetch(url, {
         method: 'POST',
         body: data.toString(),
         headers: {
-            'Authorization': 'Basic Y0Nka1R6dm5rY3NmeEJ0QXVuWVJ0d0hTOFlKTThXYWw6WXRLOHNuazJIU1g1NVV1Zg==',
+            'Authorization': `Basic ${token}`,
             'Content-Type': 'application/x-www-form-urlencoded',
             'Accept': '*/*'
         }
