@@ -50,9 +50,6 @@ app.post('/sms', (req, res) => {
 
     const url = `https://api.orange.com/smsmessaging/v1/outbound/tel:+${sender}/requests`;
 
-   
-
-
     fetch(url, {
         method: 'POST',
         headers: {
