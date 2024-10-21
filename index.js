@@ -53,7 +53,7 @@ app.post('/sms', (req, res) => {
     let token = req.body.token;
     let sender =  req.body.sender;
 
-    const url = `https://api.orange.com/smsmessaging/v1/outbound/tel:${sender}/requests`;
+    const url = `https://api.orange.com/smsmessaging/v1/outbound/tel:+${sender}/requests`;
 
    
 
@@ -68,7 +68,7 @@ app.post('/sms', (req, res) => {
         body: JSON.stringify({
             "outboundSMSMessageRequest": {
                 "address": `tel:+${telephone}`,
-                "senderAddress": `tel:${sender}`,
+                "senderAddress": `tel:+${sender}`,
                 "outboundSMSTextMessage": {
                     "message": `${message}`
                 }
