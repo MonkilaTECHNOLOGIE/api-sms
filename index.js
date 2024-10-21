@@ -1,21 +1,16 @@
-// import fetch from 'node-fetch';
-
 const express = require('express');
 const cors = require("cors");
 const fetch = require('node-fetch');
 const app = express();
 const bodyParser = require('body-parser');
 
-
 var corsOptions = {
     origin: "*"
 };
 
-
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(cors(corsOptions));
-
 
 // Route pour authentification avec l'API Orange
 app.post('/api/oauth/token', (req, res) => {
